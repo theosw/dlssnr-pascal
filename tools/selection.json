@@ -1,0 +1,46 @@
+[
+  {
+    "bundle": 0,
+    "path": "hillclimb/lanes/swin1hfam/round8/combo_prepost.sm_61.ptx"
+  },
+  {
+    "bundle": 0,
+    "path": "hillclimb/lanes/swin1hfam/round8/combo_half.sm_61.ptx"
+  },
+  {
+    "bundle": 1,
+    "path": "hillclimb/lanes/swinmh/r13linear_family2.sm_61.ptx"
+  },
+  {
+    "bundle": 2,
+    "path": "hillclimb/lanes/swinmh/r11vectorcombo_family4.sm_61.ptx"
+  },
+  {
+    "bundle": 3,
+    "path": "hillclimb/lanes/swinmh/r11vectorcombo_family8.sm_61.ptx"
+  },
+  {
+    "bundle": 4,
+    "path": "hillclimb/lanes/vitfuse/E26_qkv.sm_61.ptx"
+  },
+  {
+    "bundle": 4,
+    "path": "hillclimb/lanes/vitfuse/E29_ffwd.sm_61.ptx"
+  },
+  {
+    "bundle": 4,
+    "path": "hillclimb/lanes/vitfuse/E36_selected.sm_61.ptx"
+  },
+  {
+    "bundle": 5,
+    "path": "hillclimb/lanes/vitfuse/baseline/r5_selected.sm_61.ptx"
+  },
+  {
+    "bundle": 5,
+    "path": "hillclimb/lanes/vitfuse/baseline/r9_attention_ready.sm_61.ptx"
+  },
+  {
+    "bundle": 5,
+    "path": "hillclimb/lanes/vitfuse/E27_projection.sm_61.ptx"
+  }
+]

@@ -1,0 +1,506 @@
+{
+  "sources": {
+    "dll": "c01f1e72d00b07f1ba6e324ec28e9c42801079c85afc75e0e3baa6fbbe842c01",
+    "dll_renamed": "a9887e3afb4c7b40a1df9f479f50099f3b2185542e259b3ad06773e48d1db94a",
+    "emu": "76afda8c93f6903e31752700640e8aa0a9bba957bc6f66c7a3411f6474627ca1",
+    "pool": "417a8239a4e7921be3078228534d0b54a7a360a773607e0f88170e8dc7b0a1fa",
+    "bank": "e2cbe766d5f4f27d30520eccf29d04aafbdf0ca0126677888e41cd87932155ae",
+    "dual": "30e5f7056395076aa415c91a5d91657538baeb403a71a81282f1407cb991997d"
+  },
+  "ops": [
+    {
+      "copy": "dll",
+      "line": 8,
+      "count": 4
+    },
+    {
+      "copy": "dll",
+      "line": 0,
+      "count": 1
+    },
+    {
+      "copy": "emu",
+      "line": 12,
+      "count": 1657
+    },
+    {
+      "copy": "dll",
+      "line": 0,
+      "count": 1
+    },
+    {
+      "copy": "pool",
+      "line": 13,
+      "count": 1
+    },
+    {
+      "copy": "bank",
+      "line": 17,
+      "count": 13236
+    },
+    {
+      "copy": "bank",
+      "line": 13254,
+      "count": 14236
+    },
+    {
+      "copy": "dual",
+      "line": 13231,
+      "count": 751
+    },
+    {
+      "copy": "dll",
+      "line": 44567,
+      "count": 3
+    },
+    {
+      "add": ".maxnreg 80\n"
+    },
+    {
+      "copy": "dll",
+      "line": 0,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "add": ".shared .align 16 .b8 prepost_pre_core_state[8192];\n.reg .b32 %prepost_r<8>;\n.reg .b32 %prepost_tid;\n.reg .b64 %prepost_d<4>;\n.reg .pred %prepost_inactive;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 0,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 44572,
+      "count": 5
+    },
+    {
+      "copy": "dll",
+      "line": 0,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "add": ".reg .u32 %x,%nx;.reg .pred %q;\nmov.u32 %x,%ctaid.x;mov.u32 %nx,%nctaid.x;shl.b32 %x,%x,1;setp.ge.u32 %q,%x,%nx;@%q ret;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "add": "mov.u32 %prepost_tid, %tid.x;and.b32 %prepost_tid,%prepost_tid,127;\nsetp.ge.u32 %prepost_inactive, %prepost_tid, 32;\n.reg .pred %prepost_fillinactive;\nsetp.ge.u32 %prepost_fillinactive,%prepost_tid,64;\n@%prepost_fillinactive bra prepost_fill_join;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 44578,
+      "count": 1
+    },
+    {
+      "copyText": "dll",
+      "offset": 965864,
+      "count": 24
+    },
+    {
+      "add": "{.reg .u32 %group;mov.u32 %group,%tid.x;shr.u32 %group,%group,7;mad.lo.u32 %r116,%r116,2,%group;}\n"
+    },
+    {
+      "copy": "dll",
+      "line": 44580,
+      "count": 4
+    },
+    {
+      "copyText": "dll",
+      "offset": 47732,
+      "count": 20
+    },
+    {
+      "add": "and.b32 %r4,%r4,127;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 44585,
+      "count": 1
+    },
+    {
+      "add": "mov.u32 %r5, 2;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 44587,
+      "count": 102
+    },
+    {
+      "add": "mov.b32 %r149, prepost_pre_core_state;{.reg .u32 %group; .reg .u32 %off;mov.u32 %group,%tid.x;shr.u32 %group,%group,7;shl.b32 %off,%group,12;add.u32 %r149,%r149,%off;}\n"
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 44690,
+      "count": 562
+    },
+    {
+      "add": "prepost_fill_join:\n"
+    },
+    {
+      "copy": "dll",
+      "line": 2361,
+      "count": 1
+    },
+    {
+      "add": "// Each warp computes one original 16-token embedding fragment.\n"
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "add": ".reg .b32 %sw,%sl,%sa,%sb,%sc,%sd,%sbase;\nmov.u32 %sw,%tid.x;and.b32 %sw,%sw,127;shr.u32 %sw,%sw,5;mov.u32 %sl,%laneid;\nand.b32 %sa,%sl,3;shl.b32 %sa,%sa,2;\nand.b32 %sb,%sl,12;shl.b32 %sb,%sb,2;\nand.b32 %sc,%sl,16;shl.b32 %sc,%sc,3;\nadd.u32 %sa,%sa,%sb;add.u32 %sa,%sa,%sc;\nand.b32 %sb,%sw,1;shl.b32 %sb,%sb,6;\nshr.u32 %sc,%sw,1;shl.b32 %sc,%sc,9;\nadd.u32 %sa,%sa,%sb;add.u32 %sa,%sa,%sc;\nmov.u32 %sbase,prepost_pre_core_state;{.reg .u32 %group; .reg .u32 %off;mov.u32 %group,%tid.x;shr.u32 %group,%group,7;shl.b32 %off,%group,12;add.u32 %sbase,%sbase,%off;}add.u32 %sa,%sa,%sbase;\nld.shared.b32 %r490,[%sa];ld.shared.b32 %r491,[%sa+256];\nld.shared.b32 %r492,[%sa+1024];ld.shared.b32 %r493,[%sa+1280];\nld.param.u64 %rd58,[cc_tinlayout_fused_pre_block_swin_1h_32_1_ds_fp8_param_0+232];\nmul.wide.u32 %rd60,%sl,16;add.u64 %rd24,%rd58,%rd60;add.u64 %rd24,%rd24,8208;\nld.global.ca.v4.u32 {%r494,%r495,%r496,%r497},[%rd24];\nld.global.ca.v4.u32 {%r498,%r499,%r500,%r501},[%rd24+512];\nmov.u32 %r4785,0;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 2758,
+      "count": 1
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 45650,
+      "count": 19
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 2758,
+      "count": 1
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 45675,
+      "count": 19
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 2758,
+      "count": 1
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 45700,
+      "count": 19
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 2758,
+      "count": 1
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 45725,
+      "count": 19
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 2361,
+      "count": 1
+    },
+    {
+      "add": "shr.u32 %sa,%sl,2;shl.b32 %sa,%sa,6;\nand.b32 %sb,%sl,3;shl.b32 %sb,%sb,2;\nshl.b32 %sc,%sw,10;add.u32 %sa,%sa,%sb;add.u32 %sa,%sa,%sc;add.u32 %sa,%sa,%sbase;\nst.shared.b32 [%sa],%r547;st.shared.b32 [%sa+512],%r550;\nst.shared.b32 [%sa+16],%r553;st.shared.b32 [%sa+528],%r556;\nst.shared.b32 [%sa+32],%r559;st.shared.b32 [%sa+544],%r562;\nst.shared.b32 [%sa+48],%r565;st.shared.b32 [%sa+560],%r568;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "add": "prepost_core_join:\n"
+    },
+    {
+      "copy": "dll",
+      "line": 2361,
+      "count": 1
+    },
+    {
+      "add": "mov.u64 %prepost_d0, prepost_pre_core_state;{.reg .u32 %group; .reg .u64 %off;mov.u32 %group,%tid.x;shr.u32 %group,%group,7;mul.wide.u32 %off,%group,4096;add.u64 %prepost_d0,%prepost_d0,%off;}\ncvta.shared.u64 %prepost_d1, %prepost_d0;\nld.param.u64 %prepost_d2, [cc_tinlayout_fused_pre_block_swin_1h_32_1_ds_fp8_param_0+232];\n{ .param .b64 prepost_a0; .param .b64 prepost_a1;\nst.param.b64 [prepost_a0], %prepost_d2;\nst.param.b64 [prepost_a1], %prepost_d1;\ncall.uni prepost_core_pre, (prepost_a0,prepost_a1);\n"
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 2361,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "add": ".reg .u32 %x,%nx,%g;.reg .pred %q;\nmov.u32 %x,%ctaid.x;mov.u32 %nx,%nctaid.x;mov.u32 %g,%tid.x;shr.u32 %g,%g,7;\nmad.lo.u32 %x,%x,2,%g;setp.ge.u32 %q,%x,%nx;@%q ret;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 1666,
+      "count": 2
+    },
+    {
+      "add": "{ .param .b64 prepost_b0; .param .b64 prepost_b1; .param .b32 prepost_b2; .param .b32 prepost_b3;\n.param .b64 prepost_b4; .param .b32 prepost_b5; .param .b32 prepost_b6;\n.reg .b64 %prepost_pool; .reg .b32 %prepost_hh,%prepost_hw;\nld.param.u64 %prepost_d2,[cc_tinlayout_fused_pre_block_swin_1h_32_1_ds_fp8_param_0+224];\nld.param.u32 %prepost_r6,[cc_tinlayout_fused_pre_block_swin_1h_32_1_ds_fp8_param_0+248];ld.param.u32 %prepost_r7,[cc_tinlayout_fused_pre_block_swin_1h_32_1_ds_fp8_param_0+252];\nld.param.u64 %prepost_pool,[cc_tinlayout_fused_pre_block_swin_1h_32_1_ds_fp8_param_0+256];\nld.param.u32 %prepost_hh,[cc_tinlayout_fused_pre_block_swin_1h_32_1_ds_fp8_param_0+264];ld.param.u32 %prepost_hw,[cc_tinlayout_fused_pre_block_swin_1h_32_1_ds_fp8_param_0+268];\nst.param.b64 [prepost_b0],%prepost_d1;st.param.b64 [prepost_b1],%prepost_d2;\nst.param.b32 [prepost_b2],%prepost_r6;st.param.b32 [prepost_b3],%prepost_r7;\nst.param.b64 [prepost_b4],%prepost_pool;st.param.b32 [prepost_b5],%prepost_hh;st.param.b32 [prepost_b6],%prepost_hw;\ncall.uni prepost_publish_pre,(prepost_b0,prepost_b1,prepost_b2,prepost_b3,prepost_b4,prepost_b5,prepost_b6);\n"
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 2361,
+      "count": 1
+    },
+    {
+      "add": "@%prepost_inactive ret;\nmov.u32 %r70,%ctaid.y;shl.b32 %r70,%r70,2;\nmov.u32 %r5327,%ctaid.x;{.reg .u32 %group;mov.u32 %group,%tid.x;shr.u32 %group,%group,7;mad.lo.u32 %r5327,%r5327,2,%group;}shl.b32 %r5327,%r5327,2;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 88535,
+      "count": 20
+    },
+    {
+      "add": "mov.u32 %r83,128;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 88556,
+      "count": 4
+    },
+    {
+      "copyText": "dll",
+      "offset": 1910808,
+      "count": 21
+    },
+    {
+      "add": "and.b32 %r87,%r87,127;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 88561,
+      "count": 490
+    },
+    {
+      "copy": "dll",
+      "line": 89052,
+      "count": 3
+    },
+    {
+      "add": ".maxnreg 80\n"
+    },
+    {
+      "copy": "dll",
+      "line": 0,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "add": ".shared .align 16 .b8 prepost_post_core_state[8192];\n.reg .b32 %prepost_r<8>;\n.reg .b32 %prepost_tid;\n.reg .b64 %prepost_d<4>;\n.reg .pred %prepost_inactive;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 0,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 89057,
+      "count": 5
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "add": ".reg .u32 %x,%nx;.reg .pred %q;\nmov.u32 %x,%ctaid.x;mov.u32 %nx,%nctaid.x;shl.b32 %x,%x,1;setp.ge.u32 %q,%x,%nx;@%q ret;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "add": ".reg .s32 %x,%y,%dx,%dy,%w,%h;.reg .pred %qx,%qy,%q;\nmov.u32 %x,%ctaid.x;mov.u32 %y,%ctaid.y;shl.b32 %x,%x,4;shl.b32 %y,%y,3;\nld.param.s32 %dx,[cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+40];ld.param.s32 %dy,[cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+44];\nld.param.s32 %w,[cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+172];ld.param.s32 %h,[cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+176];\nadd.s32 %x,%x,%dx;add.s32 %y,%y,%dy;\nsetp.ge.s32 %qx,%x,%w;setp.ge.s32 %qy,%y,%h;or.pred %q,%qx,%qy;@%q ret;\nadd.s32 %x,%x,16;add.s32 %y,%y,8;\nsetp.le.s32 %qx,%x,0;setp.le.s32 %qy,%y,0;or.pred %q,%qx,%qy;@%q ret;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "add": "mov.u32 %prepost_tid, %tid.x;and.b32 %prepost_tid,%prepost_tid,127;\nsetp.ge.u32 %prepost_inactive, %prepost_tid, 64;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 89062,
+      "count": 1
+    },
+    {
+      "add": "ld.param.b64 %rd6, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+24];\nld.param.b64 %rd4, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+56];\nld.param.b64 %rd5, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+96];\nld.param.v2.b32 {%r29,%r30}, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+48];\nmov.u32 %prepost_r0, %laneid;\nshr.u32 %prepost_r1, %prepost_r0, 2;\nand.b32 %prepost_r2, %prepost_r0, 3;\nshl.b32 %prepost_r1, %prepost_r1, 6;\nshl.b32 %prepost_r2, %prepost_r2, 2;\nadd.u32 %prepost_r1, %prepost_r1, %prepost_r2;\nmov.u32 %prepost_r3, prepost_post_core_state;{.reg .u32 %group; .reg .u32 %off;mov.u32 %group,%tid.x;shr.u32 %group,%group,7;shl.b32 %off,%group,12;add.u32 %prepost_r3,%prepost_r3,%off;}\nadd.u32 %prepost_r4, %prepost_r3, %prepost_r1;\nprepost_core_join:\n"
+    },
+    {
+      "copy": "dll",
+      "line": 2361,
+      "count": 1
+    },
+    {
+      "add": "mov.u64 %prepost_d0, prepost_post_core_state;{.reg .u32 %group; .reg .u64 %off;mov.u32 %group,%tid.x;shr.u32 %group,%group,7;mul.wide.u32 %off,%group,4096;add.u64 %prepost_d0,%prepost_d0,%off;}\ncvta.shared.u64 %prepost_d1, %prepost_d0;\nld.param.u64 %prepost_d2, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+24];\n{ .param .b64 prepost_a0; .param .b64 prepost_a1;\n.param .b64 prepost_a2; .param .b64 prepost_a3;\n.param .b32 prepost_a4; .param .b32 prepost_a5; .param .b32 prepost_a6; .param .b32 prepost_a7;\n.reg .b64 %prepost_input,%prepost_skip; .reg .b32 %prepost_h,%prepost_w,%prepost_x,%prepost_y;\nld.param.b64 %prepost_input, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0];\nld.param.b64 %prepost_skip, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+8];\nld.param.b32 %prepost_h, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+32];\nld.param.b32 %prepost_w, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+36];\nld.param.b32 %prepost_x, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+40];\nld.param.b32 %prepost_y, [cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+44];\nst.param.b64 [prepost_a0], %prepost_d2;\nst.param.b64 [prepost_a1], %prepost_d1;\nst.param.b64 [prepost_a2], %prepost_input;\nst.param.b64 [prepost_a3], %prepost_skip;\nst.param.b32 [prepost_a4], %prepost_h;\nst.param.b32 [prepost_a5], %prepost_w;\nst.param.b32 [prepost_a6], %prepost_x;\nst.param.b32 [prepost_a7], %prepost_y;\ncall.uni prepost_core_post, (prepost_a0,prepost_a1,prepost_a2,prepost_a3,prepost_a4,prepost_a5,prepost_a6,prepost_a7);\n"
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 2361,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "add": ".reg .u32 %x,%nx,%g;.reg .pred %q;\nmov.u32 %x,%ctaid.x;mov.u32 %nx,%nctaid.x;mov.u32 %g,%tid.x;shr.u32 %g,%g,7;\nmad.lo.u32 %x,%x,2,%g;setp.ge.u32 %q,%x,%nx;@%q ret;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    },
+    {
+      "add": "// No pre/post producer flags. A post window with no output pixel has no observable stores.\n"
+    },
+    {
+      "copy": "dll",
+      "line": 23,
+      "count": 1
+    },
+    {
+      "add": ".reg .b32 %prepost_r8_x,%prepost_r8_y,%prepost_r8_w,%prepost_r8_h,%prepost_r8_dx,%prepost_r8_dy;\n.reg .pred %prepost_r8_px,%prepost_r8_py,%prepost_r8_out;\nmov.u32 %prepost_r8_x,%ctaid.x;{.reg .u32 %group;mov.u32 %group,%tid.x;shr.u32 %group,%group,7;mad.lo.u32 %prepost_r8_x,%prepost_r8_x,2,%group;}mov.u32 %prepost_r8_y,%ctaid.y;\nld.param.u32 %prepost_r8_w,[cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+172];ld.param.u32 %prepost_r8_h,[cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+176];\nld.param.s32 %prepost_r8_dx,[cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+40];ld.param.s32 %prepost_r8_dy,[cc_tinlayout_fused_post_block_swin_1h_32_fp8_param_0+44];\nshl.b32 %prepost_r8_x,%prepost_r8_x,3;shl.b32 %prepost_r8_y,%prepost_r8_y,3;\nadd.s32 %prepost_r8_x,%prepost_r8_x,%prepost_r8_dx;add.s32 %prepost_r8_y,%prepost_r8_y,%prepost_r8_dy;\nsetp.ge.s32 %prepost_r8_px,%prepost_r8_x,%prepost_r8_w;setp.ge.s32 %prepost_r8_py,%prepost_r8_y,%prepost_r8_h;\nor.pred %prepost_r8_out,%prepost_r8_px,%prepost_r8_py;\n@%prepost_r8_out ret;\nadd.s32 %prepost_r8_x,%prepost_r8_x,8;add.s32 %prepost_r8_y,%prepost_r8_y,8;\nsetp.le.s32 %prepost_r8_px,%prepost_r8_x,0;setp.le.s32 %prepost_r8_py,%prepost_r8_y,0;\nor.pred %prepost_r8_out,%prepost_r8_px,%prepost_r8_py;\n@%prepost_r8_out ret;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 1666,
+      "count": 2
+    },
+    {
+      "add": "@%prepost_inactive ret;\n.reg .b32 %swin1hfam_postwarp,%swin1hfam_postoffset;\nshr.u32 %swin1hfam_postwarp,%prepost_tid,5;\nshl.b32 %swin1hfam_postoffset,%swin1hfam_postwarp,11;\nadd.u32 %prepost_r4,%prepost_r4,%swin1hfam_postoffset;\nshl.b32 %swin1hfam_postoffset,%swin1hfam_postwarp,2;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 0,
+      "count": 1
+    },
+    {
+      "add": "ld.shared.b32 %r3805, [%prepost_r4+0];\nld.shared.b32 %r3806, [%prepost_r4+512];\nld.shared.b32 %r3807, [%prepost_r4+16];\nld.shared.b32 %r3808, [%prepost_r4+528];\nld.shared.b32 %r3815, [%prepost_r4+32];\nld.shared.b32 %r3816, [%prepost_r4+544];\nld.shared.b32 %r3817, [%prepost_r4+48];\nld.shared.b32 %r3818, [%prepost_r4+560];\nld.shared.b32 %r3829, [%prepost_r4+1024];\nld.shared.b32 %r3830, [%prepost_r4+1536];\nld.shared.b32 %r3831, [%prepost_r4+1040];\nld.shared.b32 %r3832, [%prepost_r4+1552];\nld.shared.b32 %r3835, [%prepost_r4+1056];\nld.shared.b32 %r3836, [%prepost_r4+1568];\nld.shared.b32 %r3837, [%prepost_r4+1072];\nld.shared.b32 %r3838, [%prepost_r4+1584];\nmov.b32 %r5420, 0;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 123465,
+      "count": 10
+    },
+    {
+      "copy": "dll_renamed",
+      "line": 128771,
+      "count": 290
+    },
+    {
+      "add": "add.s32 %r41,%r41,%swin1hfam_postoffset;\n"
+    },
+    {
+      "copy": "dll",
+      "line": 129061,
+      "count": 3
+    },
+    {
+      "copyText": "dll",
+      "offset": 2773853,
+      "count": 25
+    },
+    {
+      "add": "{.reg .u32 %group;mov.u32 %group,%tid.x;shr.u32 %group,%group,7;mad.lo.u32 %r4671,%r4671,2,%group;}\n"
+    },
+    {
+      "copy": "dll",
+      "line": 129065,
+      "count": 265
+    },
+    {
+      "copy": "dll",
+      "line": 44563,
+      "count": 1
+    },
+    {
+      "copy": "dll",
+      "line": 862,
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+/build/
+__pycache__/
+*.pyc
+*.ptx
+*.cubin
+*.fatbin
+*.trpk
+*.dll
+*.exe
+*.obj
+*.lib
+*.pdb

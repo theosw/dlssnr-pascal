@@ -1,0 +1,82 @@
+[
+  {
+    "label": "emu",
+    "source": "sources/emu/pascal_emulation.cu",
+    "flags": [
+      "-rdc=true"
+    ]
+  },
+  {
+    "label": "E26",
+    "source": "sources/E26/E26_qkv.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "E27",
+    "source": "sources/E27/E27_projection.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "E29",
+    "source": "sources/E29/E29_ffwd.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "r9",
+    "source": "sources/r9/r9_attention_ready.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "E36",
+    "source": "sources/E36/E36_ffwdproj.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "splitconv",
+    "source": "sources/splitconv/native_splitconv.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "splitconv_tile",
+    "source": "sources/splitconv_tile/r9_splitconv_tile.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "bankpairs",
+    "source": "sources/bankpairs/bankpairs_device.cu",
+    "flags": [
+      "-rdc=true",
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "pool",
+    "source": "sources/pool/core-r7_pool.cu",
+    "flags": [
+      "-rdc=true",
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "dual",
+    "source": "sources/dual/dual_device.cu",
+    "flags": [
+      "-rdc=true",
+      "-std=c++17"
+    ]
+  }
+]

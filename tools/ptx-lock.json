@@ -1,0 +1,11 @@
+{
+  "hillclimb/lanes/swin1hfam/round8/combo_half.sm_61.ptx": "3d01262171474d040125a6e0d8894d62c26ae3ee9d3058373d5c7d51f51412c3",
+  "hillclimb/lanes/swin1hfam/round8/combo_prepost.sm_61.ptx": "e3e0aec28db4ceaa00b83e7296751bb2888f97f5a6e42c1b8035e327e46cbfbe",
+  "hillclimb/lanes/vitfuse/baseline/r5_selected.sm_61.ptx": "1d5f56d834a7cc6a5768b9d33ba382ed4e8f67479ba5c0452edf0e8a1facb93a",
+  "hillclimb/lanes/vitfuse/baseline/r9_attention_ready.sm_61.ptx": "90e4edfd30f75f4a116bf31833fe3c732174766b3870d223c0781131be3d26ec",
+  "hillclimb/lanes/vitfuse/E26_qkv.sm_61.ptx": "ff218c0dc65621437d9df70a967bd89e220fe002b5f91e586fd717f8152318ee",
+  "hillclimb/lanes/vitfuse/E27_projection.sm_61.ptx": "458b896fd14dca03fac07683bb0388733572826368701fdd29d8af83cd6c7679",
+  "hillclimb/lanes/vitfuse/E29_ffwd.sm_61.ptx": "b6f6b5261f2868d459fe5f6f4011af5b416bbed7f86e24fe05cb78311edd499c",
+  "hillclimb/lanes/vitfuse/E36_selected.sm_61.ptx": "80f412d646580ba1389317abdfcca83f28d2bbe3cd370021a63c78ca41ad3dcb",
+  "lower/pascal_emulation.ptx": "b691f5bd551dbdfbca195dbb48c35bba8e1ddaecc7ab5153766c2957d784ccd4"
+}
