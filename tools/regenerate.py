@@ -2,9 +2,8 @@
 from pathlib import Path
 import hashlib,json,re,shutil,subprocess
 import build_pascal_kernels as builder
+import historical_ptx
 ROOT=Path(__file__).resolve().parent
-UNRESOLVED=('hillclimb/lanes/swin1hfam/round8/combo_half.sm_61.ptx',
-            'hillclimb/lanes/vitfuse/baseline/r5_selected.sm_61.ptx')
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def compile_source(cuda,vcvars,source,output,flags=()):
     output.parent.mkdir(parents=True,exist_ok=True)
@@ -62,6 +61,15 @@ def regenerate(official,cuda12,cuda13,vcvars,out):
       'hillclimb/lanes/vitfuse/E27_projection.sm_61.ptx':compiled['E27'],
       'hillclimb/lanes/vitfuse/E29_ffwd.sm_61.ptx':compiled['E29'],
       'hillclimb/lanes/vitfuse/baseline/r9_attention_ready.sm_61.ptx':compiled['r9']}
+    s=historical_ptx.combo_half(compiled['half_control'].read_text(),
+      compiled['half_pair'].read_text(),compiled['half_bank'].read_text())
+    path=out/'combo_half.ptx';path.write_text(s,encoding='ascii',newline='\r\n')
+    paths['hillclimb/lanes/swin1hfam/round8/combo_half.sm_61.ptx']=path
+    stages=historical_ptx.vit_stages({label:path.read_text() for label,path in compiled.items()})
+    history=out/'historical';history.mkdir()
+    for label,s in stages.items():
+        path=history/(label+'.ptx');path.write_text(s,encoding='ascii',newline='\r\n')
+    paths['hillclimb/lanes/vitfuse/baseline/r5_selected.sm_61.ptx']=history/'r5_selected.ptx'
     s=replace(compiled['splitconv'].read_text(),compiled['splitconv_tile'].read_text(),
       ['cc_split_swin_16h_proj_512_chained_fp8','cc_split_swin_16h_proj_pool_512_chained_fp8'])
     s=replace(s,compiled['E36'].read_text(),['cc_split_swin_16h_ffwd_proj_512_chained_fp8'])
@@ -84,6 +92,7 @@ def regenerate(official,cuda12,cuda13,vcvars,out):
     path=out/'combo_prepost.ptx';path.write_text(s,encoding='ascii',newline='\r\n')
     paths['hillclimb/lanes/swin1hfam/round8/combo_prepost.sm_61.ptx']=path
     lock=json.loads((ROOT/'ptx-lock.json').read_text());results=[]
+    if paths.keys()!=lock.keys():raise ValueError('regeneration does not cover exactly the locked inputs')
     for rel,path in paths.items():
         actual=sha(path);expected=lock[rel]
         results.append(dict(input=rel,expected=expected,actual=actual,matched=actual==expected))

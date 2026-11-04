@@ -1,65 +1,101 @@
-# Regeneration status: incomplete
+# Byte-exact regeneration
 
-The exact shipped pack was reproduced with the corrected toolchains before source
-extraction. Seven historical inputs have independent source/transform recipes.
-The remaining two are deliberately excluded, so the complete original-DLL-only
-acceptance criterion has not been met.
+All nine historical inputs independently regenerate from committed TRP sources
+and the user's original DLL. A complete build without historical PTX inputs
+produces the pinned 11,574,444-byte pack, SHA-256
+`5AC8546C9E08AD8D0722DE54DA5E2BFDB1976FCCC2D227B3079E739BDA2C4B43`.
+The original DLL is the only NVIDIA input; its full identity and toolchain
+requirements are in [README.md](README.md).
 
-| Input | Method / remaining work |
+| Input | Method |
 | --- | --- |
-| `lower/pascal_emulation.ptx` | Historical TRP CUDA source, originally SHA-256 `3E50FA25587ACDF82F767AA05B0048DC531CA994C94C7A3592624EA516DE4D04`; compile with CUDA 12.9 `-rdc=true -ptx -arch=sm_61 -O3`, no fast math. |
-| round8 `combo_prepost` | Compile bankpairs, pool and dual TRP CUDA units; extract/lower bundle 0 from the supplied DLL. Apply a hash-bound numerical selection/transform. Only authored wrapper additions are literal; original instructions are copied by numeric span from generated input. |
+| `lower/pascal_emulation.ptx` | Historical TRP CUDA, originally SHA-256 `3E50FA25587ACDF82F767AA05B0048DC531CA994C94C7A3592624EA516DE4D04`; CUDA 12.9 `-rdc=true -ptx -arch=sm_61 -O3`, no fast math. |
+| round8 `combo_prepost` | Compile bankpairs, pool and dual TRP CUDA; extract/lower bundle 0 from the supplied DLL. Apply the hash-bound numeric selection/transform described below. |
 | `E26_qkv` | Compile TRP E26 CUDA with C++17. |
 | `E27_projection` | Compile TRP E27 CUDA with C++17. |
 | `E29_ffwd` | Compile TRP E29 CUDA with its authored SiLU table. |
-| `E36_selected` | Compile native_splitconv, r9_splitconv_tile, E36_ffwdproj; replace the two projection entries and the finite split FFWD projection entry. |
+| `E36_selected` | Compile native_splitconv, r9_splitconv_tile and E36_ffwdproj; select the two projection entries and the finite split FFWD projection entry. |
 | baseline `r9_attention_ready` | Compile frozen TRP r9 attention CUDA. |
-| round8 `combo_half` | **Unresolved.** Compiling current control_all reproduces the retained ds entry, but the retained inpview entry differs (register allocation and body). Combining the regenerated halfbank up/out entries with the external historical control reproduces the target, which still depends on that control. The candidate family r6 CUDA also fails with its current headers because `swin1hfam_capture` is undefined. A scratch-only compile with capture disabled succeeds but still does not reproduce the retained inpview. A reconstruction using only current control_all and halfbank sources produces `161A7FFE767A6939040A483D21AE325B1FAADAFB5E2B00DC72CA755A1BC5645F`, rather than locked `3D01262171474D040125A6E0D8894D62C26AE3EE9D3058373D5C7D51F51412C3`. Need the matching historical inpview source/header snapshot or an audited authored transform of a demonstrably regenerated base. |
-| baseline `r5_selected` | **Unresolved.** Frozen r4_c128, r4_ccompact, r3_fallback_w8, r5_efallback, r5_qwhole and r4 q8x12 CUDA units compile. They do not yet establish the exact nested r4/r5 dispatch/fallback composition. r7_vit_q128 has no same-named CUDA source: r7_gen combines earlier r5_vit_fixed and q8x12 PTX. Need to recursively regenerate those earlier selections and the final manual T240 QKV/FP32 expand selection, or express verified authored edits on those generated bases. A line-coverage experiment still left 23,284 target lines unexplained by the compiled candidate set; those lines were not imported. |
+| round8 `combo_half` | Compile the frozen round4 halfpair, round8 control and round8 halfbank CUDA/header sets. Retain control's module envelope and ds entry, select round4's paired inpview and halfbank's up/out, then reproduce the historical bounds and shared-symbol rename. |
+| baseline `r5_selected` | Compile ten frozen TRP ViT/integer CUDA units and reproduce the full recursive dispatch, fallback, shared-alias and final selection chain in `tools/historical_ptx.py`. No PTX body is stored in that transform. |
 
-All nine locked hashes are in `tools/ptx-lock.json`; successful builds compare
-actual bytes with those hashes. Source line endings are normalized in Git. The
-historical composed PTX uses CRLF; regeneration emits that explicitly where needed.
-NVCC's path-dependent internal-linkage identifiers for TRP's own SiLU tables are
-canonicalized before checking the generated-base hashes. No absolute path is
-embedded in the committed recipes.
+All nine full locked hashes are in `tools/ptx-lock.json`. Regeneration requires
+exact lock coverage and checks every actual file's bytes before pack assembly.
+`tools/compiles.json` records every source and compiler flag. Historical composed
+PTX uses CRLF; regeneration emits that explicitly. Source line endings are LF.
+No absolute workstation paths are embedded in the recipes.
+
+## Recovered half-family source chain
+
+The retained inpview is E22's round4 `halfpair_half.cu` with its own frozen
+`halfpair_*` headers, not the later round8 `control_all.cu` version. It compiles to
+the exact retained entry. Round8 control independently supplies the exact ds
+entry, and round8 halfbank supplies the exact up/out entries. The original
+selection kept 64-register bounds for the selected entries and renamed the
+upsample shared symbol to `swin1hfam_r5_up_shared`, including its demotion comment.
+`combo_half` emits these transformations on compiled output and matches
+`3D01262171474D040125A6E0D8894D62C26AE3EE9D3058373D5C7D51F51412C3`.
+
+The sources live in `tools/sources/half_r4` and `half_r8`. Their SiLU table is an
+authored mathematical lookup table, not model data: an independent CPU enumeration
+of the cubic formula, FP16 rounding and FP8 encoding matches all 65,536 entries in
+both headers. No instruction body or missing
+header was reconstructed by copying the target PTX into source.
+
+## Recovered ViT dispatch chain
+
+The ten compiled units are `r3_vit_banks`, `r4_vit_all96`, `r5_expand_fixed`,
+`r4_vit_q8x12`, `r4_c128`, `r4_ccompact`, `r3_fallback_w8`, `r5_efallback`,
+`r5_efp96` and `r5_qwhole`. The CPU transform reproduces these stages in order:
+
+1. `r5_vit_dispatch`: round4's T288 bodies and round3's general fallback share
+   aliased A/B storage; `r5_vit_fixed` replaces expand with its compiled fixed/general source.
+2. `r7_vit_96`: also selects the fast contract/QKV bodies at T96;
+   `r7_vit_q128` replaces QKV's general fallback with compiled q8x12 bodies.
+3. `r4_conly128`: integer M128 contract at T96/T240/T288, with eight-warp FP32
+   fallback; `r5_c96` adds compact M96 contract at T96.
+4. `r5_ebase`: replaces expand with the FP32 general fallback source;
+   `r5_pre_e96` adds direct FP32 M96 expand at T96; `r5_pre_ec` adds FP32 M128 at T240.
+5. `r5_selected`: adds whole-K integer QKV at T240 only, retaining the nested
+   earlier exact FP32 fallback. Other token counts keep the earlier selection.
+
+Every intermediate independently matched its historical bytes during recovery.
+The builder retains generated stages under `regenerated/historical/` for auditing.
+Shared arrays are packed with the historical 16-byte alignment, label suffixes
+retain nested branch scope, and dispatch wrappers retain the original thread
+guards and global metadata declarations. Compiler-generated temporary symbol names
+for these TRP sources disappear through the historical shared aliases, so source
+directory changes do not require copying historical compiler identifiers.
+The final bytes match
+`1D5F56D834A7CC6A5768B9D33BA382ED4E8F67479BA5C0452EDF0E8A1FACB93A`.
 
 ## Authored transform audit
 
-`tools/prepost-transform.json` stores zero-based line/count references, four
-whole-instruction character-span references, full generated-source SHA-256 pins,
-and TRP-authored wrapper additions. It stores no deleted lines or NVIDIA context.
-The authored pieces come from the prepost stitch_v24, r7_input, r7_pool, r8_clip
-and swin1hfam pairing/group-offset transformations. The inherited instruction
-prefixes of combined lines are references into the generated base. Compile output
-of TRP-authored sources is generated at build time, including the lookup-table
-initializer. The numerical recipe intentionally fails on a changed generated base.
+`tools/historical_ptx.py` stores TRP-authored selection, dispatch wrappers, shared
+aliases and label renames. All kernel bodies are obtained from fresh compilation
+of the committed CUDA sources. It contains no NVIDIA kernel context, deleted
+instructions, mechanically converted source or encoded target body.
 
-## Manual acceptance
+`tools/prepost-transform.json` remains the existing hash-bound numerical recipe:
+zero-based line/count references, four instruction character-span references,
+full generated-base hashes and authored wrapper additions. It stores no deleted
+lines or NVIDIA context. Inherited instruction prefixes of combined lines are
+references into the generated DLL base. SiLU initializer data comes from compiling
+TRP source. NVCC's path-dependent internal-linkage names for TRP's SiLU tables are
+canonicalized before checking those base hashes. A changed base refuses.
 
-Run the README's partial-build command from this repository. Inspect
-`regenerated/results.json` for seven exact per-input hashes and `acceptance.json`
-for the exact whole-pack hash. This is a CPU rebuild check, not inference or game
-acceptance. The `complete` field stays false while either external input is needed.
-The source-only command refuses a full build without those inputs and can still
-regenerate the seven solved inputs with `--generate-only`.
+## CPU acceptance
 
-No unproven candidate output is substituted for a locked input. No research PTX,
-pack, cubin, fatbin, raw capture, benchmark runner, remote command or GPU lock is
-part of this checkout. The exact seven-versus-nine status must remain visible
-until the two missing source chains have passed their own locked hashes and a
-new full pack build without the partial-input option.
+Run the complete-build command in README with a new output directory. Inspect
+`regenerated/results.json` for nine exact per-input hashes and `acceptance.json`
+for `complete: true`, `externalInputs: []`, `matched: true` and the pinned pack hash.
+No historical pack, PTX or research selection list is read. `--generate-only`
+performs all nine input checks without assembling a pack.
 
-## Checks completed for this extraction
-
-- Corrected upstream recipe: exact shipped Pascal pack hash.
-- Standalone partial recipe: all seven regenerated input hashes match, and the
-  final pack matches the shipped hash exactly. The two external inputs remain
-  recorded in acceptance; this is not source-only completeness.
-- Windows x64 Release static library and admission executable build successfully.
-- CTest: 5/5 targets passed (16 Python unit tests plus the C++ admission suite).
-  CUDA 12.9 ptxas ran the five compiled launch-bounds tests; none were skipped.
-- Additional CPU run: real pinned pack accepted by the host manifest/hash parser;
-  copied/tampered/truncated pack cases refused. No DLL was loaded for that check.
-- Full-build invocation without the partial-input option refuses before creating
-  its output directory. No GPU dispatch or game acceptance was performed.
+Windows x64 Release library/admission builds and all six CTest targets pass,
+including 22 Python tests. The launch-bounds tests use CUDA 12.9 ptxas with no
+skips. Regeneration tests cover shared-region alignment, scalar shared extents,
+nested fallback/thread guards, missing replacements, changed generated-base
+refusal and out-of-bounds numeric spans. The actual pinned pack is also accepted
+by the CPU admission/hash parser; copied/tampered/truncated inputs refuse.
+No GPU dispatch, DLL loading or game acceptance is claimed.

@@ -5,10 +5,9 @@ Experimental developer component for building and loading TRP's GTX 10 (Pascal,
 Tested only on a **GTX 1070 Ti**. Requires **driver 582.78+ on the R580 Pascal
 branch**; the inherited admission rule is `58278 <= version < 59000`.
 
-**Incomplete extraction:** seven of nine historical PTX inputs regenerate exactly.
-`combo_half.sm_61.ptx` and `baseline/r5_selected.sm_61.ptx` still require an external,
-hash-locked research input. This checkout cannot yet build the pack using only the
-original DLL and toolchains. See [REGENERATION.md](REGENERATION.md). No PTX is vendored.
+All nine historical PTX inputs regenerate byte-exactly from committed sources
+and the original DLL. The complete pack rebuild matches the pinned shipped hash.
+See [REGENERATION.md](REGENERATION.md). No PTX is vendored.
 
 This is a developer component, not an end-user mod. NR reaches players through
 Theo's Render Pipeline's **Universal edition on Nexus**.
@@ -32,24 +31,22 @@ cmake --build <build-root>/host --config Release
 ctest --test-dir <build-root>/host -C Release --output-on-failure
 ```
 
-Regenerate the seven solved PTX inputs without supplying historical PTX:
+Build the complete pack from the original DLL and toolchains:
 
 ```powershell
-python -I -B tools/build_pack.py --official <original-dll> --cuda12 <cuda12-root> --cuda13 <cuda13-root> --vcvars <vcvars64.bat> --output <new-build-root> --generate-only
+python -I -B tools/build_pack.py --official <original-dll> --cuda12 <cuda12-root> --cuda13 <cuda13-root> --vcvars <vcvars64.bat> --output <new-build-root>
 ```
 
-Manual byte-identity check for this **incomplete** extraction:
-
-```powershell
-python -I -B tools/build_pack.py --official <original-dll> --cuda12 <cuda12-root> --cuda13 <cuda13-root> --vcvars <vcvars64.bat> --output <new-build-root> --partial-input-root <research-root>
-```
-
-Only the two unresolved, locked inputs are read from `<research-root>`. All other
-PTX and the twelve H2/H4/H8 allocator variants are rebuilt from committed sources
-or generated from the supplied original DLL. `selection.json` uses portable
-relative paths. No historical workstation selection list or prior pack is used.
-The script refuses absent/mismatched inputs and a differing final pack hash.
-It records seven per-input hashes and whole-pack acceptance under the build root.
+Add `--generate-only` to regenerate and verify all nine locked PTX inputs without
+assembling the pack. No historical PTX, research directory, selection list or prior
+pack is consumed. All PTX and the twelve H2/H4/H8 allocator variants are rebuilt
+from committed sources or generated from the supplied original DLL.
+`selection.json` uses portable relative paths. The script refuses mismatched
+inputs, incomplete lock coverage and a differing final pack hash. It records nine
+per-input hashes in `regenerated/results.json` and whole-pack acceptance in
+`acceptance.json` (`complete: true`, `externalInputs: []`). Build output stays in
+the supplied build directory; the removed `--partial-input-root` option is no
+longer accepted.
 The expected Pascal pack is 11,574,444 bytes, SHA-256
 `5AC8546C9E08AD8D0722DE54DA5E2BFDB1976FCCC2D227B3079E739BDA2C4B43`.
 

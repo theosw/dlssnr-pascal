@@ -1,4 +1,4 @@
-"""Incomplete standalone recipe: two locked historical inputs remain external.
+"""Rebuild the byte-identical Pascal pack from sources and the original DLL.
 No download, installation, runtime loading, or GPU dispatch is performed.
 """
 from pathlib import Path
@@ -25,24 +25,15 @@ def merge_ptx(paths):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('official','cuda12','cuda13','vcvars','output'):p.add_argument('--'+name,type=Path,required=True)
-    p.add_argument('--partial-input-root',type=Path,help='INCOMPLETE recipe only: supplies exactly the two unresolved locked historical PTX inputs')
-    p.add_argument('--generate-only',action='store_true',help='regenerate the seven solved inputs without building a pack')
-    a=p.parse_args();lock=json.loads((ROOT/'ptx-lock.json').read_text())
+    p.add_argument('--generate-only',action='store_true',help='regenerate all nine locked inputs without building a pack')
+    a=p.parse_args()
     if regen.sha(a.official).upper()!=ORIGINAL_SHA256:p.error('original DLL hash differs')
     for root,name,version in [(a.cuda12,'nvcc','V12.9.86'),(a.cuda12,'ptxas','V12.9.86'),(a.cuda12,'fatbinary','V12.9.86'),(a.cuda13,'cuobjdump','V13.4.92')]:
         text=subprocess.run([str(root/'bin'/(name+'.exe')),'--version'],capture_output=True,text=True,check=True).stdout
         if version not in text:p.error(name+' version differs from '+version)
-    external={}
-    if not a.generate_only:
-        if not a.partial_input_root:p.error('recipe incomplete; missing generators for '+', '.join(regen.UNRESOLVED))
-        for rel in regen.UNRESOLVED:
-            source=a.partial_input_root/rel
-            if regen.sha(source)!=lock[rel]:p.error('unresolved input identity differs: '+rel)
-            external[rel]=source
     out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
     inputs=regen.regenerate(a.official,a.cuda12,a.cuda13,a.vcvars,out/'regenerated')
     if a.generate_only:return
-    inputs.update(external)
     native=out/'native';shutil.copytree(ROOT/'sources/swinmh',native)
     shutil.copyfile(ROOT/'sm_general_slots.cuh',native/'sm_general_slots.cuh')
     for h in (2,4,8):
@@ -68,7 +59,7 @@ def main():
     command=[sys.executable,'-I','-B',str(ROOT/'build_pascal_kernels.py'),'--official',str(a.official),'--cuda12',str(a.cuda12),'--cuda13',str(a.cuda13),'--vcvars',str(a.vcvars),'--emulation-ptx',str(inputs['lower/pascal_emulation.ptx']),*selections,*launches,'--architectures','61','--work-dir',str(out/'pack-work'),'--output',str(pack)]
     with (out/'pack-build.log').open('w') as log:subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,check=True)
     actual=regen.sha(pack).upper()
-    (out/'acceptance.json').write_text(json.dumps(dict(complete=False,externalInputs=list(external),produced=actual,shipped=PACK_SHA256,matched=actual==PACK_SHA256),indent=2)+'\n')
+    (out/'acceptance.json').write_text(json.dumps(dict(complete=True,externalInputs=[],produced=actual,shipped=PACK_SHA256,matched=actual==PACK_SHA256),indent=2)+'\n')
     if actual!=PACK_SHA256:raise ValueError('whole-pack identity differs: '+actual)
-    print('byte-identical pack '+actual+' (INCOMPLETE: two external inputs)',flush=True)
+    print('byte-identical pack '+actual+' (all inputs regenerated)',flush=True)
 if __name__=='__main__':main()

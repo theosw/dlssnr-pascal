@@ -116,6 +116,41 @@ credit and notice in THIRD-PARTY.md. This does not grant rights to NVIDIA materi
 | `tools/sources/swinmh/swinmh_quant_exact.cuh` | TRP-authored (GPL v3 + exceptions) | TRP-authored research CUDA/header; generic mathematical tables where present |
 | `tools/sources/swinmh/swinmh_r5_silu_lut.cuh` | TRP-authored (GPL v3 + exceptions) | TRP-authored research CUDA/header; generic mathematical tables where present |
 | `tools/sources/swinmh/swinmh_r7_qkv.cuh` | TRP-authored (GPL v3 + exceptions) | TRP-authored research CUDA/header; generic mathematical tables where present |
+| `tests/test_regeneration.py` | TRP-authored (GPL v3 + exceptions) | CPU synthetic shared-alias, nested dispatch and hash-bound transform refusal fixtures; no NVIDIA kernel text |
+| `tools/historical_ptx.py` | TRP-authored (GPL v3 + exceptions) | CPU-only adaptation of half-family round4/round8 and split16vit/integer round4/round5/round7 generators; wrapper/selection code only, no stored kernel bodies |
+| `tools/sources/half_r4/halfpair_half.cu` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round4/halfpair_half.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r4/halfpair_nf_core.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round4/halfpair_nf_core.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r4/halfpair_nf_views.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round4/halfpair_nf_views.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r4/halfpair_of_core.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round4/halfpair_of_core.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r4/halfpair_of_views.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round4/halfpair_of_views.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r4/native_swin1h_r6_nf_helpers.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round4/native_swin1h_r6_nf_helpers.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r4/native_swin1h_r6_of_helpers.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round4/native_swin1h_r6_of_helpers.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r4/r2_quant.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round4/r2_quant.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r4/r4_silu_lut.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round4/r4_silu_lut.cuh; Authored mathematical FP16-to-SiLU/FP8 lookup table; no model parameters |
+| `tools/sources/half_r8/control_all.cu` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/control_all.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/halfbank_all.cu` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/halfbank_all.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/halfbank_nf_core.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/halfbank_nf_core.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/halfbank_nf_views.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/halfbank_nf_views.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/halfbank_of_core.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/halfbank_of_core.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/halfbank_of_views.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/halfbank_of_views.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/native_swin1h_r6_nf_helpers.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/native_swin1h_r6_nf_helpers.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/native_swin1h_r6_of_helpers.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/native_swin1h_r6_of_helpers.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/r2_quant.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/r2_quant.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/r4_silu_lut.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/r4_silu_lut.cuh; Authored mathematical FP16-to-SiLU/FP8 lookup table; no model parameters |
+| `tools/sources/half_r8/upinline_nf_core.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/upinline_nf_core.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/upinline_nf_views.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/upinline_nf_views.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/upinline_of_core.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/upinline_of_core.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/half_r8/upinline_of_views.cuh` | TRP-authored (GPL v3 + exceptions) | swin1hfam/round8/upinline_of_views.cuh; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/int8/r3_fallback_w8.cu` | TRP-authored (GPL v3 + exceptions) | int8/r3_fallback_w8.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/int8/r4_c128.cu` | TRP-authored (GPL v3 + exceptions) | int8/r4_c128.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/int8/r4_ccompact.cu` | TRP-authored (GPL v3 + exceptions) | int8/r4_ccompact.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/int8/r5_efallback.cu` | TRP-authored (GPL v3 + exceptions) | int8/r5_efallback.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/int8/r5_efp96.cu` | TRP-authored (GPL v3 + exceptions) | int8/r5_efp96.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/int8/r5_qwhole.cu` | TRP-authored (GPL v3 + exceptions) | int8/r5_qwhole.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/vit_expand/r5_expand_fixed.cu` | TRP-authored (GPL v3 + exceptions) | split16vit/best/r5-final/r5_expand_fixed.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/vit_qkv/r4_vit_q8x12.cu` | TRP-authored (GPL v3 + exceptions) | split16vit/best/r4-q8x12/r4_vit_q8x12.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/vit_r3/r3_vit_banks.cu` | TRP-authored (GPL v3 + exceptions) | split16vit/best/r3-banks/r3_vit_banks.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
+| `tools/sources/vit_r4/r4_vit_all96.cu` | TRP-authored (GPL v3 + exceptions) | split16vit/best/r4-final/r4_vit_all96.cu; Frozen TRP-authored CUDA/header; original algorithm, data-layout/ABI compatibility facts, no mechanically converted NVIDIA source |
 
 ## Generated at build time; never committed
 
@@ -128,10 +163,16 @@ credit and notice in THIRD-PARTY.md. This does not grant rights to NVIDIA materi
 
 Excluded from history: original/modified DLLs, weights, all PTX files, packs,
 cubins/fatbins, raw evidence, local configuration, research logs, captures,
-GPU/remote benchmark runners, historical absolute-path selection lists and the
-two unresolved historical PTX inputs. Third-party toolchains/SDK headers are not
+GPU/remote benchmark runners, historical absolute-path selection lists and all
+historical PTX inputs. Third-party toolchains/SDK headers are not
 vendored. Full upstream TRP renderer, player mod packaging, deployment, NVAPI
 submission hooks and NGX inference are outside this extracted library.
 
-Incomplete inputs are identified in REGENERATION.md and tools/ptx-lock.json.
-No unresolved output was reclassified as authored source to make the recipe pass.
+All nine inputs regenerate exactly; their source chains are documented in
+REGENERATION.md and their output identities in tools/ptx-lock.json. Recovered CUDA
+and headers are unchanged apart from LF normalization. Compatibility facts in
+comments, FP16/FP8 arithmetic and mathematical lookup tables are treated as
+authored implementations, not vendor kernel text or weights. Independent CPU
+enumeration of the cubic/rounding formula matched all 65,536 values in each newly
+imported SiLU table. No target PTX body
+was imported or reclassified to complete the recipe.

@@ -78,5 +78,96 @@
       "-rdc=true",
       "-std=c++17"
     ]
+  },
+  {
+    "label": "half_pair",
+    "source": "sources/half_r4/halfpair_half.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "half_control",
+    "source": "sources/half_r8/control_all.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "half_bank",
+    "source": "sources/half_r8/halfbank_all.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "vit_r3",
+    "source": "sources/vit_r3/r3_vit_banks.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "vit_r4",
+    "source": "sources/vit_r4/r4_vit_all96.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "vit_expand",
+    "source": "sources/vit_expand/r5_expand_fixed.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "vit_qkv",
+    "source": "sources/vit_qkv/r4_vit_q8x12.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "r4_c128",
+    "source": "sources/int8/r4_c128.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "r4_ccompact",
+    "source": "sources/int8/r4_ccompact.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "r3_fallback_w8",
+    "source": "sources/int8/r3_fallback_w8.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "r5_efallback",
+    "source": "sources/int8/r5_efallback.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "r5_efp96",
+    "source": "sources/int8/r5_efp96.cu",
+    "flags": [
+      "-std=c++17"
+    ]
+  },
+  {
+    "label": "r5_qwhole",
+    "source": "sources/int8/r5_qwhole.cu",
+    "flags": [
+      "-std=c++17"
+    ]
   }
 ]
