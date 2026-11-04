@@ -7,15 +7,19 @@ branch**; the inherited admission rule is `58278 <= version < 59000`.
 
 All nine historical PTX inputs regenerate byte-exactly from committed sources
 and the original DLL. The complete pack rebuild matches the pinned shipped hash.
-See [REGENERATION.md](REGENERATION.md). No PTX is vendored.
+See [REGENERATION.md](REGENERATION.md). No NVIDIA or compiled PTX is vendored.
 
 This is a developer component, not an end-user mod. NR reaches players through
 Theo's Render Pipeline's **Universal edition on Nexus**.
 
 ## Inputs and build
 
-The repository ships no NVIDIA files: no DLLs, weights, packs, cubins, fatbins, or
-NVIDIA-derived PTX/source. Users supply the original NVIDIA DLL and both toolkits:
+The repository ships no NVIDIA files: no DLLs, weights, packs, cubins, fatbins, and
+no NVIDIA code text or compiled PTX. The CUDA sources are behaviour-compatible
+reimplementations. To reproduce NVIDIA's results bit-exactly they use NVIDIA's
+kernel interfaces (kernel, parameter and class names; parameter-block and
+weight-blob offsets) and a few of its approximation constants, such as the cubic
+SiLU coefficients. Users supply the original NVIDIA DLL and both toolkits:
 
 - Original NR 310.9.16 DLL, 266,424,944 bytes, SHA-256
   `2BC19BC09A7B89DD44F73E2AC0108FCC586E2154BDD0830F242F4F040E28789F`.

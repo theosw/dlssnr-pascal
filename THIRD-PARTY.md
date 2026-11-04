@@ -37,6 +37,17 @@ SOFTWARE.
 NVIDIA's DLL, kernels, weights and CUDA toolchains are separately supplied inputs
 and retain NVIDIA's own terms. No grant in this repository, including openNR's MIT
 notice, relicenses those inputs or the derived PTX/binary build outputs. CUDA
-headers are referenced from the user's toolkit and are not vendored. Generic
-FP8/SiLU lookup tables in TRP headers are mathematical implementation tables, not
-model weights or copies of runtime constants.
+headers are referenced from the user's toolkit and are not vendored.
+
+The TRP CUDA sources are behaviour-compatible reimplementations. For bit-exact
+results they reproduce NVIDIA interface facts (kernel, parameter and class names;
+parameter-block and weight-blob offsets) and a few approximation constants that
+also appear in NVIDIA's kernels, such as the cubic SiLU coefficients. The FP8/SiLU
+lookup tables are computed from those coefficients for every FP16 input; they are
+not model weights. No NVIDIA code text, PTX or weights are included.
+
+## Projects named in LICENSE
+
+LICENSE is TRP's license text, retained verbatim. Its preamble credits
+Skyrim-Upscaler (PureDark) and ENBFrameGeneration / Community Shaders (doodlum and
+contributors) for parts of TRP. This component contains none of their code.
