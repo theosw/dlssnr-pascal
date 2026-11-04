@@ -21,7 +21,8 @@ requirements are in [README.md](README.md).
 
 All nine full locked hashes are in `tools/ptx-lock.json`. Regeneration requires
 exact lock coverage and checks every actual file's bytes before pack assembly.
-`tools/compiles.json` records every source and compiler flag. Historical composed
+`tools/compiles.json` records every source and its per-unit flags; common flags are
+in `tools/regenerate.py` and allocator-variant flags in `tools/build_pack.py`. Historical composed
 PTX uses CRLF; regeneration emits that explicitly. Source line endings are LF.
 No absolute workstation paths are embedded in the recipes.
 
@@ -97,5 +98,7 @@ including 22 Python tests. The launch-bounds tests use CUDA 12.9 ptxas with no
 skips. Regeneration tests cover shared-region alignment, scalar shared extents,
 nested fallback/thread guards, missing replacements, changed generated-base
 refusal and out-of-bounds numeric spans. The actual pinned pack is also accepted
-by the CPU admission/hash parser; copied/tampered/truncated inputs refuse.
+by the CPU admission/hash parser when its path is passed: run
+`<build-root>/host/Release/admission_tests.exe <pack>`. The pinned pack and a copy
+are accepted; tampered or truncated copies refuse.
 No GPU dispatch, DLL loading or game acceptance is claimed.
